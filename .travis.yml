@@ -1,7 +1,6 @@
 sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
 language: python
 python:
-  - 3.5
   - 3.6
 install: pip install -r requirements/dev.txt
 before_script:
@@ -10,4 +9,4 @@ before_script:
   - export DATABASE_URL="postgres://skwgzshuxlnyku:c5854e942b729273f32e7cd36f02dcf5e8a6b8d126c76240bf724a78a7fcbf56@ec2-54-225-241-25.compute-1.amazonaws.com:5432/d65oe2bcb086vf"
   - export CONFIG_ENV="prod"
 
-script: flask test
+script: python manage.py test
