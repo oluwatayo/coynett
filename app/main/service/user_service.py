@@ -37,8 +37,8 @@ def save_new_user(data):
     return response_object, response_code
 
 
-def get_all_users():
-    return User.query.all()
+def get_all_users(start):
+    return User.query.filter(User.id >= start).limit(15).all()
 
 
 def get_a_user_public_id(public_id):
@@ -51,6 +51,10 @@ def get_a_user_email(email):
 
 def get_a_user_username(username):
     return User.query.filter_by(username=username).first()
+
+
+def search_users_username(username, start):
+    return User.query.filter(User.username.contains(username)).all()
 
 
 def update_a_user(public_id, data):
