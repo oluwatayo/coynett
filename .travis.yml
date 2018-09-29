@@ -8,6 +8,7 @@ before_script:
   - export FLASK_DEBUG=1
   - export DATABASE_URL="postgres://kwrjrruroljjcc:44becbac21b3e14d22454e3fc162b0c4dfa9241d7a2daf3a539be8d3ab5513fc@ec2-54-235-66-24.compute-1.amazonaws.com:5432/ddfmu0dhuo06bq"
   - export CONFIG_ENV="prod"
+  - export DATABASE_URL_TEST="postgres://kwrjrruroljjcc:44becbac21b3e14d22454e3fc162b0c4dfa9241d7a2daf3a539be8d3ab5513fc@ec2-54-235-66-24.compute-1.amazonaws.com:5432/ddfmu0dhuo06bq"
 
 script:
   - python manage.py test
