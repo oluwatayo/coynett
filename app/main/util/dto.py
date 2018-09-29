@@ -20,3 +20,14 @@ class AuthDto:
         'email_or_username': fields.String(required=True, description='The email address or user\'s username'),
         'password': fields.String(required=True, description='The user password '),
     })
+
+
+class PostDto:
+    api = Namespace('post', description='Post Related Operations')
+    post = api.model('post', {
+        'id': fields.Integer(required=False, description='Don\'t put anything here when sending'),
+        'title': fields.String(required=True, description='Title od the post'),
+        'content': fields.String(required=True, description='Post content'),
+        'post_image': fields.String(required=True, description='Post image'),
+        'user_id': fields.Integer(required=True, description='Id of user posting')
+    })
