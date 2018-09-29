@@ -2,6 +2,7 @@ import os
 import unittest
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
+from flask import redirect
 from app.main.model import models
 from app import blueprint
 
@@ -26,7 +27,7 @@ def run():
 
 @app.route("/")
 def hello():
-    return "hello"
+    return redirect('/api/v1/docs')
 
 
 @manager.command

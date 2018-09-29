@@ -15,7 +15,7 @@ def save_new_user(data):
             first_name=data['first_name'],
             last_name=data['last_name'],
             gender=data['gender'],
-            user_avatar=data['avatar'],
+            user_avatar=data['user_avatar'],
             username=data['username'],
             password=data['password'],
             registered_on=datetime.datetime.utcnow()
