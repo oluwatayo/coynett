@@ -31,7 +31,7 @@ class TestTestingConfig(TestCase):
         self.assertFalse(app.config['SECRET_KEY'] is 'coynett_debug')
         self.assertTrue(app.config['DEBUG'])
         self.assertTrue(
-            app.config['SQLALCHEMY_DATABASE_URI'] == os.getenv('DATABASE_URL')
+            app.config['SQLALCHEMY_DATABASE_URI'] == 'postgresql://postgres:itkalasado@localhost/coynett_test'
         )
 
 

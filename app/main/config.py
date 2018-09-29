@@ -1,6 +1,7 @@
 import os
 
 postgres_local_base = os.environ['DATABASE_URL']
+postgres_local_base_test = 'postgresql://postgres:itkalasado@localhost/coynett_test'
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,7 +20,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     DEBUG = True
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = postgres_local_base
+    SQLALCHEMY_DATABASE_URI = postgres_local_base_test
     PRESERVE_CONTEXT_ON_EXCEPTION = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
