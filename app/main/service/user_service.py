@@ -1,10 +1,26 @@
 import uuid
 import datetime
-
 from sqlalchemy.exc import IntegrityError
-
 from app.main import db
 from app.main.model.models import User
+
+
+def generate_token(user):
+    try:
+        auth_token = User.encode_auth_token(user.public_id)
+        response_object = {
+            'status': 'success',
+            'message': 'Successfully registered.',
+            'Authorization': auth_token.decode()
+        }
+        return response_object, 201
+    except Exception as e:
+        print(e)
+        response_object = {
+            'status': 'fail',
+            'message': 'Some error occurred. Please try again.'
+        }
+        return response_object, 401
 
 
 def save_new_user(data):
@@ -22,19 +38,14 @@ def save_new_user(data):
         )
         db.session.add(new_user)
         db.session.commit()
-        response_object = {
-            'status': 'success',
-            'message': 'Successfully registered.'
-        }
-        response_code = 201
+        response_object = generate_token(new_user)
     except IntegrityError as e:
         print(e)
         response_object = {
-            'status': 'error',
-            'message': 'Email or Username Already Exists'
-        }
-        response_code = 409
-    return response_object, response_code
+                              'status': 'error',
+                              'message': 'Email or Username Already Exists. Login Instead'
+                          }, 409
+    return response_object
 
 
 def get_all_users(start):
