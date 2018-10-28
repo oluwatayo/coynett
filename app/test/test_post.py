@@ -10,7 +10,7 @@ def register_and_get_user_data(self):
     register_response = register_user(self)
     response_data = json.loads(register_response.data.decode())
     token = response_data['Authorization']
-    user_data = Auth.get_logged_in_user(token)
+    user_data = Auth.get_logged_in_user(None, token=token)
     # print(user_data[0])
     return user_data[0].get('data')['user_id']
 

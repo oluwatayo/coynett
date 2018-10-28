@@ -13,16 +13,16 @@ _user = UserDto.user
 class UserData(Resource):
     @user_api.doc('list of all registered users')
     @user_api.marshal_list_with(_user, envelope='data')
-    @user_api.doc(params={'username': 'username', 'start': 'where to start listing from'})
+    @user_api.doc(params={'username': 'username', 'page': 'page requested'})
     def get(self):
         username = request.args.get('username')
-        start = request.args.get('start')
-        if not start:
-            start = 1
+        page = request.args.get('page')
+        if not page:
+            page = 1
         if not username:
-            return get_all_users(start)
+            return get_all_users(int(page))
         else:
-            return search_users_username(username, start)
+            return search_users_username(username, int(page))
 
     @user_api.response(201, 'user successfully created')
     @user_api.doc('create a new user')

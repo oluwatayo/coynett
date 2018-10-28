@@ -29,6 +29,7 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime, nullable=False)
     posts = db.relationship('Post', backref='users', cascade='all, delete-orphan', lazy='dynamic')
     comments = db.relationship('Comment', backref='users', cascade='all, delete-orphan', lazy='dynamic')
+    posts_likes = db.relationship('PostUserLikes', backref='users', cascade='all, delete-orphan', lazy='dynamic')
 
     @property
     def password(self):
@@ -107,7 +108,9 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     post_image = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    no_of_likes = db.Column(db.Integer, nullable=False, default=0)
     comments = db.relationship('Comment', backref='posts', cascade='all, delete-orphan', lazy='dynamic')
+    post_likes = db.relationship('PostUserLikes', backref='posts', cascade='all, delete-orphan', lazy='dynamic')
 
     def __repr__(self):
         return "Post Title: {}".format(self.title)
@@ -123,3 +126,14 @@ class Comment(db.Model):
 
     def __repr__(self):
         return "Comment {}".format(self.id)
+
+
+class PostUserLikes(db.Model):
+    __tablename__ = 'post_user_likes'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+
+    def __repr__(self):
+        return "{}__{}".format(self.user_id, self.post_id)

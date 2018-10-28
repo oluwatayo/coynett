@@ -58,13 +58,24 @@ class Auth:
             return response_object, 403
 
     @staticmethod
-    def get_logged_in_user(new_request):
+    def get_logged_in_user(new_request, token = None):
         # get the auth token
-        auth_token = new_request#.headers.get('Authorization')
+        if new_request is not None:
+            auth_token = new_request.headers.get('Authorization')
+        else:
+            auth_token = token
         if auth_token:
             resp = User.decode_auth_token(auth_token)
             if isinstance(resp, str):
+                print(resp)
                 user = User.query.filter_by(public_id=resp).first()
+                if not user:
+                    response_object = {
+                        'status': 'fail',
+                        'message': resp
+                    }
+                    return response_object, 401
+
                 response_object = {
                     'status': 'success',
                     'data': {

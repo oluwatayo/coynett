@@ -48,8 +48,9 @@ def save_new_user(data):
     return response_object
 
 
-def get_all_users(start):
-    return User.query.filter(User.id >= start).limit(15).all()
+def get_all_users(page):
+    users = User.query.paginate(page=page)
+    return users.items
 
 
 def get_a_user_public_id(public_id):
@@ -64,8 +65,9 @@ def get_a_user_username(username):
     return User.query.filter_by(username=username).first()
 
 
-def search_users_username(username, start):
-    return User.query.filter(User.username.contains(username)).all()
+def search_users_username(username, page):
+    users = User.query.filter(User.username.contains(username)).paginate(page=page)
+    return users.items
 
 
 def update_a_user(public_id, data):
