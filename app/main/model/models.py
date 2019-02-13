@@ -107,13 +107,23 @@ class Post(db.Model):
     title = db.Column(db.String(300), nullable=False)
     content = db.Column(db.Text, nullable=False)
     post_image = db.Column(db.String(200))
+    posted_on = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
+    minute_read = db.Column(db.Integer, nullable=False, default=5)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     no_of_likes = db.Column(db.Integer, nullable=False, default=0)
     comments = db.relationship('Comment', backref='posts', cascade='all, delete-orphan', lazy='dynamic')
     post_likes = db.relationship('PostUserLikes', backref='posts', cascade='all, delete-orphan', lazy='dynamic')
+    user = db.relationship('User', backref='user_posts')
 
     def __repr__(self):
         return "Post Title: {}".format(self.title)
+
+    @staticmethod
+    def set_user(post):
+        post.username = post.user.username
+        post.user_email = post.user.email
+        post.user_avatar = post.user.user_avatar
+        return post
 
 
 class Comment(db.Model):

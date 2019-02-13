@@ -6,6 +6,7 @@ from flask import request
 
 api = PostDto.api
 a_post = PostDto.post
+a_post_with_user_det = PostDto.post_with_user_detail
 c_api = CommentDto.api
 a_comment = CommentDto.comment
 
@@ -13,12 +14,12 @@ a_comment = CommentDto.comment
 @api.route('/')
 class Post(Resource):
     @api.doc(params={'page': 'page being requested'})
-    @api.marshal_list_with(a_post, envelope='data')
+    @api.marshal_list_with(a_post_with_user_det, envelope='data')
     def get(self):
         page = request.args.get('page')
         if not page:
             page = 1
-        return get_post(int(page))
+        return get_post_with_user_det(int(page))
 
     @api.expect(a_post)
     def post(self):

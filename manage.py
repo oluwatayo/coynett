@@ -40,16 +40,16 @@ def test():
         return 0
     return 1
 
+
 @manager.command
 def create_comments():
     for i in range(200):
-        comment = Comment(comment='comment'+str(i), post_id=1, user_id=1)
+        comment = Comment(comment='comment' + str(i), post_id=1, user_id=1)
         db.session.add(comment)
 
     db.session.commit()
 
     return 1
-
 
 
 if __name__ == '__main__':

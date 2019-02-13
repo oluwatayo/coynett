@@ -1,4 +1,4 @@
-from ..model.models import Post, PostUserLikes, Comment
+from ..model.models import Post, PostUserLikes, Comment, User
 from .. import db
 
 
@@ -30,6 +30,31 @@ def create_post(post_data):
 def get_post(page):
     posts = Post.query.paginate(page=page)
     return posts.items
+
+
+'''def get_post_with_user_det(page):
+    #posts = Post.query.join(User, Post.user_id==User.id).first()
+    #print(posts.user.public_id)
+    posts = Post.query.filter_by(id=3).first()
+    posts.public_id = posts.user.public_id
+    print(posts.user.public_id)
+    #posts = Post.query.paginate(page=page)
+    return posts'''
+
+
+def get_post_with_user_det(page):
+    # posts = db.session.query(Post, User.public_id).filter(Post.user_id==User.id).first()
+    # posts = Post.query.join(User, Post.user_id==User.id).add_columns(Post.user).first()
+    # print(posts.statement)
+    # posts = Post.query.paginate(page=page)
+    '''posts = Post.query.join(User, Post.user_id == User.id).add_columns(User.public_id, Post.id, Post.user_id,
+                                                                       Post.post_image, Post.content,
+                                                                       Post.no_of_likes).all()'''
+
+    posts = Post.query.join(User, Post.user_id == User.id).paginate(page=page)
+    posts = [Post.set_user(post) for post in posts.items]
+    print(posts)
+    return posts
 
 
 def delete_post(post_id):
