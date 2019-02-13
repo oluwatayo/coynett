@@ -27,7 +27,7 @@ class TestingConfig(Config):
 
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_0URI = postgres_local_base
+    SQLALCHEMY_DATABASE_URI = postgres_local_base
 
 
 config_by_name = dict(
